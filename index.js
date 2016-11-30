@@ -52,6 +52,5 @@ collector(function(flowrecord) {
 }).listen(3241);
 
 process.on('SIGINT', function() {
-    connection.end();
     process.exit();
 });
