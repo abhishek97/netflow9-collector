@@ -20,9 +20,7 @@ function logTranslation(unixTime, lanSrcAddr, lanSrcPort,
                         postNatSrcAddr, postNatSrcPort, dstAddr, dstPort) {
 
         stream.once('open', (fd) => {
-            stream.write(unixTime + "Internal IP: " + lanSrcAddr + ":" lanSrcPort + " -> Translated Ip: " + postNatSrcAddr + ":" + postNatSrcPort
-            + " Destination: " + dstAddr + ":" + dstPort
-            );
+            stream.write(unixTime + "Internal IP: " + lanSrcAddr + ":" lanSrcPort + " -> Translated Ip: " + postNatSrcAddr + ":" + postNatSrcPort + " Destination: " + dstAddr + ":" + dstPort);
             stream.end();
         });
 }
