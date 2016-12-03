@@ -9,7 +9,7 @@ const fs = require('fs');
 const stream = fs.createWriteStream('var/log/natlog', { 'flags': 'a'
     , 'encoding': 'utf-8'
 });
-require('events').EventEmitter.prototype._maxListeners = 0;
+require('events').EventEmitter.prototype._maxListeners = 600;
 
 //const netmask = require('netmask').Netmask;
 
