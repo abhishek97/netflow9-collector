@@ -6,7 +6,9 @@
 
 const collector = require('node-netflowv9');
 const fs = require('fs');
-const stream = fs.createWriteStream('var/log/natlog');
+const stream = fs.createWriteStream('var/log/natlog', { 'flags': 'a'
+    , 'encoding': 'utf-8'
+});
 //const netmask = require('netmask').Netmask;
 
 /*
@@ -26,6 +28,7 @@ function logTranslation(unixTime, lanSrcAddr, lanSrcPort,
 }
 
 collector(function(flowrecord) {
+
     var unixTime = flowrecord['header']['seconds'];
     var flows = flowrecord['flows'];
     for (var flow in flows) {
@@ -46,9 +49,9 @@ collector(function(flowrecord) {
         var dstPort = f['l4_dst_port'];
         var srcPort = f['l4_src_port'];
         var natSrcPort = f['postNAPTSourceTransportPort'];
-        console.log(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort);
+       console.log(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort);
         logTranslation(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort);
-        //console.log(f)
+       // console.log(f)
 
     }
 }).listen(3241);
