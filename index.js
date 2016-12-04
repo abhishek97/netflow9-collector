@@ -6,9 +6,10 @@
 
 const collector = require('node-netflowv9');
 const fs = require('fs');
-const stream = fs.createWriteStream('var/log/natlog', { 'flags': 'a'
-    , 'encoding': 'utf-8'
-});
+//const stream = fs.createWriteStream('var/log/natlog', { 'flags': 'a'
+  //  , 'encoding': 'utf-8'
+//});
+
 require('events').EventEmitter.prototype._maxListeners = 600;
 
 //const netmask = require('netmask').Netmask;
@@ -23,10 +24,11 @@ const blocks = [
 function logTranslation(unixTime, lanSrcAddr, lanSrcPort,
                         postNatSrcAddr, postNatSrcPort, dstAddr, dstPort) {
 
-        stream.once('open', (fd) => {
-            stream.write( "" + unixTime + "Internal IP: " + lanSrcAddr + ":" + lanSrcPort + " -> Translated Ip: " + postNatSrcAddr + ":" + postNatSrcPort + " Destination: " + dstAddr + ":" + dstPort);
-            stream.end();
-        });
+    var line = "" + unixTime + "Internal IP: " + lanSrcAddr + ":" + lanSrcPort + " -> Translated Ip: " + postNatSrcAddr + ":" + postNatSrcPort + " Destination: " + dstAddr + ":" + dstPort + "\n";
+    fs.appendFile('syslog.log', line , function (err) {
+       if (err)
+         console.error(err);
+    });
 }
 
 collector(function(flowrecord) {
