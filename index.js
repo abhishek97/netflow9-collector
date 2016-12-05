@@ -6,6 +6,7 @@
 
 const collector = require('node-netflowv9');
 const fs = require('fs');
+const moment = require('moment');
 //const stream = fs.createWriteStream('var/log/natlog', { 'flags': 'a'
   //  , 'encoding': 'utf-8'
 //});
@@ -24,7 +25,7 @@ const blocks = [
 function logTranslation(unixTime, lanSrcAddr, lanSrcPort,
                         postNatSrcAddr, postNatSrcPort, dstAddr, dstPort) {
 
-    var line = "" + unixTime + "Internal IP: " + lanSrcAddr + ":" + lanSrcPort + " -> Translated Ip: " + postNatSrcAddr + ":" + postNatSrcPort + " Destination: " + dstAddr + ":" + dstPort + "\n";
+    var line = "" + moment().format('MMMM Do YYYY, h:mm:ss a') + " Internal IP: " + lanSrcAddr + ":" + lanSrcPort + " -> Translated Ip: " + postNatSrcAddr + ":" + postNatSrcPort + " Destination: " + dstAddr + ":" + dstPort + "\n";
     fs.appendFile('syslog.log', line , function (err) {
        if (err)
          console.error(err);
@@ -53,6 +54,7 @@ collector(function(flowrecord) {
         var dstPort = f['l4_dst_port'];
         var srcPort = f['l4_src_port'];
         var natSrcPort = f['postNAPTSourceTransportPort'];
+        var SrcInt = f['IF_NAME'];
        console.log(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort);
         logTranslation(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort);
        // console.log(f)
