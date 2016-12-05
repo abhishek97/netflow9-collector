@@ -23,9 +23,9 @@ const blocks = [
 */
 
 function logTranslation(unixTime, lanSrcAddr, lanSrcPort,
-                        postNatSrcAddr, postNatSrcPort, dstAddr, dstPort) {
+                        postNatSrcAddr, postNatSrcPort, dstAddr, dstPort, srcInt) {
 
-    var line = "" + moment().format('MMMM Do YYYY, h:mm:ss a') + " Internal IP: " + lanSrcAddr + ":" + lanSrcPort + " -> Translated Ip: " + postNatSrcAddr + ":" + postNatSrcPort + " Destination: " + dstAddr + ":" + dstPort + "\n";
+    var line = "" + srcInt + " " + moment().format('MMMM Do YYYY, h:mm:ss a') + " Internal IP: " + lanSrcAddr + ":" + lanSrcPort + " -> Translated Ip: " + postNatSrcAddr + ":" + postNatSrcPort + " Destination: " + dstAddr + ":" + dstPort + "\n";
     fs.appendFile('syslog.log', line , function (err) {
        if (err)
          console.error(err);
@@ -56,7 +56,7 @@ collector(function(flowrecord) {
         var natSrcPort = f['postNAPTSourceTransportPort'];
         var SrcInt = f['IF_NAME'];
        console.log(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort);
-        logTranslation(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort);
+        logTranslation(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort,SrcInt);
        // console.log(f)
 
     }
