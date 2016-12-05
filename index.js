@@ -38,10 +38,10 @@ collector(function(flowrecord) {
     var flows = flowrecord['flows'];
     for (var flow in flows) {
         var f = flows[flow];
-        if (f['protocol'] != 6) {
+        //if (f['protocol'] != 6) {
             // only log TCP translations
-            continue;
-        }
+          //  continue;
+        //}
         var src = f['ipv4_src_addr'];
         var isNat = true;
 
