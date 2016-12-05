@@ -25,6 +25,10 @@ const blocks = [
 function logTranslation(unixTime, lanSrcAddr, lanSrcPort,
                         postNatSrcAddr, postNatSrcPort, dstAddr, dstPort, srcInt) {
 
+    //Do not log DNS queries
+    if(dstAddr == '8.8.8.8' )
+        return ;
+
     var line =  " " + moment().format('MMMM Do YYYY, h:mm:ss a') + " Internal IP: " + lanSrcAddr + ":" + lanSrcPort + " -> Translated Ip: " + postNatSrcAddr + ":" + postNatSrcPort + " Destination: " + dstAddr + ":" + dstPort + "\n";
     fs.appendFile('syslog.log', line , function (err) {
        if (err)
