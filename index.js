@@ -55,9 +55,9 @@ collector(function(flowrecord) {
         var srcPort = f['l4_src_port'];
         var natSrcPort = f['postNAPTSourceTransportPort'];
         var SrcInt = f['IF_NAME'];
-       console.log(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort);
+       //console.log(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort);
         logTranslation(unixTime, src, srcPort, natSrcAddr, natSrcPort, dst, dstPort,SrcInt);
-       // console.log(f)
+        console.log(f)
 
     }
 }).listen(3241);
